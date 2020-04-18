@@ -1,6 +1,6 @@
-import React, { useState } from 'react';
-import useEventListener from '@use-it/event-listener';
-import { TILE_SIZE, HEAD_OFFSET } from '../../settings/constants';
+import React from 'react';
+import { TILE_SIZE, HEAD_OFFSET, EDirection } from '../../settings/constants';
+import useHeroMoviment from '../../hooks/useHeroMoviment';
 
 import './index.css';
 
@@ -10,35 +10,7 @@ const heroInicialPosition = {
 };
 
 const Hero = () => {
-  const [heroPosition, setHeroPosition] = useState(heroInicialPosition);
-  const [direction, setDirection] = useState('RIGHT');
-
-  useEventListener('keydown', (event: any) => {
-      const sqm = 1;
-      const movements = {
-        ArrowUp() {
-          setHeroPosition({ x: heroPosition.x, y: heroPosition.y + sqm });
-        },
-        ArrowDown() {
-          setHeroPosition({ x: heroPosition.x, y: heroPosition.y - sqm });
-        },
-        ArrowLeft() {
-          setHeroPosition({ x: heroPosition.x - sqm , y: heroPosition.y});
-          setDirection('LEFT');
-        },
-        ArrowRight() {
-          setHeroPosition({ x: heroPosition.x  + sqm , y: heroPosition.y });
-          setDirection('RIGHT');
-        },
-      };
-
-      const keyPressed = event.key;
-      const heroMovement = movements[keyPressed];
-      
-      if (heroMovement) {
-        heroMovement(keyPressed);
-      }
-  });
+  const { heroPosition, direction } = useHeroMoviment(heroInicialPosition);
 
   return (
    <div 
@@ -52,7 +24,8 @@ const Hero = () => {
       bottom: 48 * heroPosition.y,
       left: 48 * heroPosition.x,
       backgroundPosition: `0 -${TILE_SIZE - HEAD_OFFSET}px`,
-      transform: `scaleX(${direction === 'RIGHT' ? 1 : -1})`
+      transform: `scaleX(${direction === EDirection.RIGHT ? 1 : -1})`,
+      zIndex: 1
     }}
    />
   );

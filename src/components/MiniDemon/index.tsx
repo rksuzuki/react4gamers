@@ -1,15 +1,11 @@
-import React, { useState, useEffect } from 'react';
-import { TILE_SIZE, HEAD_OFFSET } from '../../settings/constants';
+import React from 'react';
+import { TILE_SIZE, HEAD_OFFSET, EDirection } from '../../settings/constants';
+import useEnemyMoviment from '../../hooks/useEnemyMoviment';
 
 import './index.css';
 
-const miniDemonInicialPosition = {
-  x: Math.floor(Math.random() * 19) + 1,
-  y: Math.floor(Math.random() * 19) + 1
-};
-
 const MiniDemon = () => {
-  const [miniDemonPosition, setMiniDemonPosition] = useState(miniDemonInicialPosition);
+  const { enemyPosition, direction } = useEnemyMoviment({x: 10, y: 5});
 
   return (
    <div 
@@ -20,9 +16,10 @@ const MiniDemon = () => {
       backgroundRepeat: 'no-repeat',
       animation: 'mini-demon-animation 1s steps(4) infinite',
       position: 'absolute',
-      bottom: 48 * miniDemonPosition.x,
-      left: 48 * miniDemonPosition.y,
-      backgroundPosition: `0 -${TILE_SIZE - HEAD_OFFSET}px`
+      bottom: 48 * enemyPosition.y,
+      left: 48 * enemyPosition.x,
+      backgroundPosition: `0 -${TILE_SIZE - HEAD_OFFSET}px`,
+      transform: `scaleX(${direction === EDirection.RIGHT ? 1 : -1})`
     }}
    />
   );
