@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import useEventListener from '@use-it/event-listener';
 import { EDirection } from '../../settings/constants';
-import handleNextPosition from '../../contexts/canvas/helpers';
+import { checkValidMoviment, handleNextPosition } from '../../contexts/canvas/helpers';
 
 export default function useHeroMoviment(heroInicialPosition) {
   const [heroPosition, setHeroPosition] = useState(heroInicialPosition);
@@ -15,8 +15,13 @@ export default function useHeroMoviment(heroInicialPosition) {
     }
 
     const nextPosition = handleNextPosition(direction, heroPosition);
+    const isValidMoviment = checkValidMoviment(nextPosition);
+
+    if (isValidMoviment) {
     setHeroPosition(nextPosition);
     setDirection(direction);
+    }
+
   });
 
   return {

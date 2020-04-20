@@ -5,14 +5,14 @@ import useEnemyMoviment from '../../hooks/useEnemyMoviment';
 import './index.css';
 
 interface IProps {
-  initialPosition: {
+  enemyInitialPosition: {
     x: number,
     y: number
   }
 };
 
 const MiniDemon = (props: IProps) => {
-  const { enemyPosition, direction } = useEnemyMoviment(props.initialPosition);
+  const { enemyPosition, direction } = useEnemyMoviment(props.enemyInitialPosition);
 
   return (
    <div 
@@ -23,8 +23,8 @@ const MiniDemon = (props: IProps) => {
       backgroundRepeat: 'no-repeat',
       animation: 'mini-demon-animation 1s steps(4) infinite',
       position: 'absolute',
-      top: 48 * enemyPosition.y,
-      left: 48 * enemyPosition.x,
+      top: TILE_SIZE * enemyPosition.y,
+      left: TILE_SIZE * enemyPosition.x,
       backgroundPosition: `0 -${TILE_SIZE - HEAD_OFFSET}px`,
       transform: `scaleX(${direction === EDirection.RIGHT ? 1 : -1})`
     }}

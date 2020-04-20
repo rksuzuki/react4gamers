@@ -3,7 +3,14 @@ import { TILE_SIZE } from '../../settings/constants';
 
 import './index.css';
 
-const Trap = () => {
+interface IProps {
+  initialPosition: {
+    x: number,
+    y: number
+  }
+}
+
+const Trap = (props: IProps) => {
   return (
    <div 
     style={{
@@ -13,8 +20,8 @@ const Trap = () => {
       backgroundRepeat: 'no-repeat',
       animation: 'trap-animation 1s steps(8) infinite',
       position: 'absolute',
-      top: 48 * 10,
-      left: 48 * 10
+      top: TILE_SIZE * props.initialPosition.y,
+      left: TILE_SIZE * props.initialPosition.x
     }}
    />
   );
