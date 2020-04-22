@@ -23,7 +23,7 @@ const MiniDemon = (props: IProps) => {
       backgroundRepeat: 'no-repeat',
       animation: 'mini-demon-animation 1s steps(4) infinite',
       position: 'absolute',
-      top: TILE_SIZE * enemyPosition.y,
+      top: TILE_SIZE * enemyPosition.y - HEAD_OFFSET,
       left: TILE_SIZE * enemyPosition.x,
       backgroundPosition: `0 -${TILE_SIZE - HEAD_OFFSET}px`,
       transform: `scaleX(${direction === EDirection.RIGHT ? 1 : -1})`

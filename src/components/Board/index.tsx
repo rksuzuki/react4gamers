@@ -54,7 +54,6 @@ const Board = () => {
     <div>
 
       {elements}
-      <Debugger />
       <img 
         src="./assets/tileset.gif" 
         alt="board" 

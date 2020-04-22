@@ -1,9 +1,12 @@
-import React, { useState } from 'react';
+import React, { useState, useContext } from 'react';
 import useEventListener from '@use-it/event-listener';
-import { EDirection } from '../../settings/constants';
-import { checkValidMoviment, handleNextPosition } from '../../contexts/canvas/helpers';
+import { EDirection, EWalker } from '../../settings/constants';
+import { CanvasContext } from '../../contexts/canvas';
+import { ChestsContext } from '../../contexts/chests';
 
 export default function useHeroMoviment(heroInicialPosition) {
+  const chestsContext = useContext(ChestsContext);
+  const canvasContext = useContext(CanvasContext);
   const [heroPosition, setHeroPosition] = useState(heroInicialPosition);
   const [direction, setDirection] = useState(EDirection.RIGHT);
 
@@ -14,12 +17,19 @@ export default function useHeroMoviment(heroInicialPosition) {
       return;
     }
 
-    const nextPosition = handleNextPosition(direction, heroPosition);
-    const isValidMoviment = checkValidMoviment(nextPosition);
+    const { nextPosition, nextMove } = canvasContext.updateCanvas(direction, heroPosition, EWalker.HERO);
 
-    if (isValidMoviment) {
-    setHeroPosition(nextPosition);
-    setDirection(direction);
+    if (nextMove.valid) {
+      setHeroPosition(nextPosition);
+      setDirection(direction);
+    }
+
+    if (nextMove.dead) {
+      console.log('você morreu');
+    }
+
+    if (nextMove.chest) {
+      chestsContext.updateOpenedChests();
     }
 
   });

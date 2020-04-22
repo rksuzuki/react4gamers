@@ -1,8 +1,8 @@
-import React from 'react';
+import React, { useContext } from 'react';
 import Tile from './Tile';
-import { canvas } from '../../contexts/canvas/helpers';
+import { CanvasContext } from '../../contexts/canvas';
 
-function getCanvasMap() {
+function getCanvasMap(canvas) {
   const tileArray = [];
 
   for (let y = 0; y < canvas.length; y++) {
@@ -23,7 +23,8 @@ function getCanvasMap() {
 }
 
 export default function Debugger() {
-  const tiles = getCanvasMap();
+  const canvasContext = useContext(CanvasContext);
+  const tiles = getCanvasMap(canvasContext.canvas);
 
   return (
     <div>
