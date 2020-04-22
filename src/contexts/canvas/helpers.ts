@@ -82,8 +82,8 @@ function getHeroValidMoves(canvasValue) {
 
 function getEnemyValidMoves(canvasValue) {
   return {
-    valid: canvasValue === ECanvas.FLOOR || canvasValue === ECanvas.DEMON,
-    dead: false,
+    valid: canvasValue === ECanvas.FLOOR || canvasValue === ECanvas.HERO,
+    dead: canvasValue === ECanvas.HERO,
     chest: false,
     door: false,
   }

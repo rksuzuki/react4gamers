@@ -10,7 +10,7 @@ export const ChestsContext = createContext({
     total: 0,
     positions: []
   },
-  updateOpenedChests: () => null
+  updateOpenedChests: (position) => null
 });
 
 export function ChestsProvider(props: IProps) {
@@ -20,8 +20,17 @@ export function ChestsProvider(props: IProps) {
       total: 0,
       positions: []
     },
-    updateOpenedChests: () => {
-      console.log('chests');
+    updateOpenedChests: (position) => {
+      updateChestsState(prevState => {
+        return {
+          totalChests: prevState.totalChests,
+          openedChests: {
+            total: prevState.openedChests.total + 1,
+            positions: prevState.openedChests.positions.concat(position)
+          },
+          updateOpenedChests: prevState.updateOpenedChests
+        }
+      });
     }
   })
 

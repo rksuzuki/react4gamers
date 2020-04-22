@@ -14,3 +14,8 @@ export enum EWalker {
   HERO = "hero",
   ENEMY = "enemy"
 }
+
+export enum EStatusMessage {
+  WIN = "Parabéns, você venceu!",
+  DEAD = "Você morreu"
+}

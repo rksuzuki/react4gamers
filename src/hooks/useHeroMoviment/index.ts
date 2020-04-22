@@ -1,6 +1,6 @@
 import React, { useState, useContext } from 'react';
 import useEventListener from '@use-it/event-listener';
-import { EDirection, EWalker } from '../../settings/constants';
+import { EDirection, EWalker, EStatusMessage } from '../../settings/constants';
 import { CanvasContext } from '../../contexts/canvas';
 import { ChestsContext } from '../../contexts/chests';
 
@@ -25,11 +25,23 @@ export default function useHeroMoviment(heroInicialPosition) {
     }
 
     if (nextMove.dead) {
-      console.log('você morreu');
+      setTimeout(() => {
+        alert(EStatusMessage.DEAD);
+      });
+
+      window.location.reload();
     }
 
     if (nextMove.chest) {
-      chestsContext.updateOpenedChests();
+      chestsContext.updateOpenedChests(nextPosition);
+    }
+
+    if (chestsContext.totalChests === chestsContext.openedChests.total && nextMove.door) {
+      setTimeout(() => {
+        alert(EStatusMessage.WIN);
+      });
+
+      window.location.reload();
     }
 
   });

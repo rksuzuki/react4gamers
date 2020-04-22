@@ -1,7 +1,6 @@
 import { useState, useContext } from 'react';
 import useInterval from '@use-it/interval';
-import { EDirection, EWalker } from '../../settings/constants';
-import { handleNextPosition, checkValidMoviment } from '../../contexts/canvas/helpers';
+import { EDirection, EWalker, EStatusMessage } from '../../settings/constants';
 import { CanvasContext } from '../../contexts/canvas';
 
 export default function useEnemyMoviment(enemyInitialPosition) {
@@ -17,9 +16,18 @@ export default function useEnemyMoviment(enemyInitialPosition) {
     const { nextPosition, nextMove } = canvasContext.updateCanvas(randomDirection, enemyPosition, EWalker.ENEMY);
 
     if (nextMove.valid) {
-    setEnemyPosition(nextPosition);
-    setDirection(randomDirection);
+      setEnemyPosition(nextPosition);
+      setDirection(randomDirection);
     }
+
+    if (nextMove.dead) {
+      setTimeout(() => {
+        alert(EStatusMessage.DEAD);
+      });
+
+      window.location.reload();
+    }
+
   }, 1000);
 
   return {
